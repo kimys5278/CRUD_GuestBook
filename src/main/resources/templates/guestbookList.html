@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 리스트</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>게시물 리스트</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>글 번호</th>
+            <th>제목</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="guestbook:${list}">
+            <td th:text="${guestbook.id}">1</td>
+            <td>
+                <a th:text="${guestbook.title}" th:href="@{/guestbook/view(id=${guestbook.id})}"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <form action="/guestbook/write">
+        <button class="btn btn-primary">글 작성하기</button>
+    </form>
+    <form action="/guestbook/list">
+        <button class="btn btn-secondary">전체 리스트</button>
+    </form>
+    <div class="pagination">
+        <ul class="pagination">
+            <li th:if="${currentPage > 1}">
+                <a th:href="@{/guestbook/list(page=${currentPage - 1})}">Previous</a>
+            </li>
+            <li th:each="page : ${#numbers.sequence(1, totalPages)}" th:class="${page == currentPage} ? 'active'">
+                <a th:href="@{/guestbook/list(page=${page})}" th:text="${page}"></a>
+            </li>
+            <li th:if="${currentPage < totalPages}">
+                <a th:href="@{/guestbook/list(page=${currentPage + 1})}">Next</a>
+            </li>
+        </ul>
+    </div>
+
+    <form th:action="@{/guestbook/list}" method="get">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="searchKeyword" placeholder="검색어 입력">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">검색</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

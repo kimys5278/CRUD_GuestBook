@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 상세페이지</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${guestbook.title}"></h1>
+    <p th:text="${guestbook.content}"></p>
+    <form action="/guestbook/list">
+        <button type="submit" class="btn btn-primary">리스트</button>
+    </form>
+    <form action="/guestbook/write">
+        <button type="submit" class="btn btn-secondary">추가 게시물 작성</button>
+    </form>
+    <a th:href="@{/guestbook/delete(id=${guestbook.id})}" class="btn btn-danger">글 삭제</a>
+    <a th:href="@{/guestbook/modify/{id}(id=${guestbook.id})}" class="btn btn-primary">글 수정</a>
+</div>
+</body>
+</html>
